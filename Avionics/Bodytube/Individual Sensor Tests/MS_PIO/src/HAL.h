@@ -39,10 +39,6 @@ namespace HAL {
     const uint8_t GPS_TX_PIN = 17;
     const uint8_t GPS_I2C_PORT = 2; //This is not a pin
 
-    // Flight data
-    
-    // Adafruit_ICM20948 imu;
-    // TinyGPSPlus gps;
 
     /* ---------- Pinouts ---------- */
     // Transmitter
@@ -51,36 +47,30 @@ namespace HAL {
     const uint8_t TRANSMITTER_D0 = 2;
     const uint8_t TRANSMITTER_D1 = 4;
 
-    // Altimeters
-    const uint8_t ALTIMETER1_CS = 26;
-    const uint8_t ALTIMETER2_CS = 25;
+    // Altimeter
+    const uint8_t ALTIMETER_CS = 26;
 
-    // IMU
-    const uint8_t IMU_CS = 33;
+    // Shock Accelerometer
+    const uint8_t Shock_CS = 25;
+
+    // ADS
+    const uint8_t ADS_CS = 33;
+    const uint8_t ADS_INT = 39;
 
     // SD/Flash
     const uint8_t SD_CS = 32;
 
-    void initCSPins() {
-        pinMode(IMU_CS, OUTPUT);
-        pinMode(ALTIMETER1_CS, OUTPUT);
-        pinMode(ALTIMETER2_CS, OUTPUT);
-        pinMode(SD_CS, OUTPUT);
-
-        digitalWrite(IMU_CS, HIGH);
-        digitalWrite(ALTIMETER1_CS, HIGH);
-        digitalWrite(ALTIMETER2_CS, HIGH);
-        digitalWrite(SD_CS, HIGH);
-    }
-    
     void initSensorHAL() {
-        
         sensorSPI = new SPIClass(HSPI);
         sensorSPI->begin(HSCK_PIN, HMISO_PIN, HMOSI_PIN);
-    
-        
-
     }   
+
+    void initRadioHAL() {
+        
+        radioSPI = new SPIClass(VSPI);
+        radioSPI->begin(VSCK_PIN, VMISO_PIN, VMOSI_PIN);
+
+    } 
 }
 
 

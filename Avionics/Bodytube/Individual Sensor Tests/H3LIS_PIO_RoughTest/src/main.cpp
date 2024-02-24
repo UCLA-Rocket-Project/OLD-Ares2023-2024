@@ -15,7 +15,7 @@ void setup()
 
   HAL::initSensorHAL();
 
-  xl.begin(H3LIS::USE_SPI, HAL::Shock_CS, HAL::sensorSPI); // Selects the bus to be used and sets
+  xl.begin(comm_mode::USE_SPI, HAL::Shock_CS, HAL::sensorSPI); // Selects the bus to be used and sets
                           //  the power up bit on the accelerometer.
                           //  Also zeroes out all accelerometer
                           //  registers that are user writable.

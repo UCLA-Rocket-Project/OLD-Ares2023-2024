@@ -68,7 +68,7 @@ ADS1256::ADS1256(const byte DRDY_pin, const byte RESET_pin, const byte SYNC_pin,
 //Initialization
 void ADS1256::InitializeADC(SPIClass* ads_spi)
 {
-  Serial.println("Setting up");
+
   //Chip select LOW  
   digitalWrite(_CS_pin, LOW);
   
@@ -97,13 +97,12 @@ void ADS1256::InitializeADC(SPIClass* ads_spi)
   delay(200);
   writeRegister(MUX_REG, B00000001); //MUX AIN0+AIN1
   delay(200);
-  writeRegister(ADCON_REG, B00000000); //ADCON - CLK: OFF, SDCS: OFF, PGA = 0 (+/- 5 V)
+  writeRegister(ADCON_REG, B00000000); //ADCON - CLK: OFF, SDCS: OFF, PGA = 0 (+/- 5 V);
   delay(200);
   writeRegister(DRATE_REG, B10000010); //100SPS 
   delay(200);
   sendDirectCommand(B11110000); //Offset and self-gain calibration
   delay(200);
-  
   _isAcquisitionRunning = false; //MCU will be waiting to start a continuous acquisition
 }
 

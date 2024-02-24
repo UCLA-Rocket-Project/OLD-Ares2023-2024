@@ -14,7 +14,7 @@ const uint8_t ADS_DRDY = 39;
 
 
 ADS1256 A(ADS_DRDY, 0, 0, ADS_CS, 2.500); //DRDY, RESET, SYNC(PDWN), CS, VREF(float).      //ATmega32U4 
-
+  
 long rawConversion = 0; //24-bit raw value
 float voltageValue = 0; //human-readable floating point value
 
@@ -79,7 +79,7 @@ void setup()
 
   Serial.println("ADS1256 - Custom Library Demo File by Curious Scientist - 2023-11-10");
 
-  SPIClass* SPI_pins = new SPIClass(VSPI);
+  SPIClass* SPI_pins = new SPIClass(HSPI);
   SPI_pins->begin(HSCK_PIN, HMISO_PIN, HMOSI_PIN);
   Serial.println("before setup");
   A.InitializeADC(SPI_pins); //See the documentation for every details
@@ -95,7 +95,7 @@ void setup()
   //--------------------------------------------
 
   //Set input channels
-  A.setMUX(DIFF_6_7); //0b01100111 - DEC: 103
+  A.setMUX(DIFF_0_1); //0b01100111 - DEC: 103
   //--------------------------------------------
 
   //Set DRATE
@@ -164,7 +164,7 @@ void loop()
           for (int i = 0; i < 8; i++)
           {
             Serial.print(A.convertToVoltage(A.cycleSingle()), 4); //print the converted single-ended results with 4 digits
-            Serial.print("\t");//tab separator to separate the 4 conversions shown in the same line
+            Serial.print(",");//tab separator to separate the 4 conversions shown in the same line
           }
           Serial.println();//Printing a linebreak - this will put the next 8 conversions in a new line
         }

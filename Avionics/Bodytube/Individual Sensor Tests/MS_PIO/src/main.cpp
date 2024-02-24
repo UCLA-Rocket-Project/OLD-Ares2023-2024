@@ -2,7 +2,7 @@
 
 #include "Globals.h"
 #include "HAL.h"
-#include "IMU.h"
+#include "MS.h"
 #include <Arduino.h>
 
 
@@ -15,20 +15,16 @@ void setup() {
     while(!Serial);
   #endif
 
-
-  
-  HAL::initCSPins();
   HAL::initSensorHAL();
-  // delay(1000);
-  ICM::setupIMU();
-
+  MS::setupMS();
+  
     
 }
 
 void loop() {
 
-  ICM::readIMU();
+  
 
-  DEBUGLN();
+  MS::readAltimeter();
   delay(100);
 }

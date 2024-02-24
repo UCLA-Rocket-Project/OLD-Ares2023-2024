@@ -10,14 +10,18 @@ H3LIS::H3LIS(void)
 void H3LIS::begin(comm_mode mode, uint8_t CS_pin, SPIClass* SPI_port = &SPI)
 {
   this->mode = mode;
+  
+  if (mode == USE_SPI) {
+    
+    this->CSPin = CS_pin;
+    H3LIS_SPI = SPI_port;
+  }
+  
   setPowerMode(NORMAL);
   axesEnable(true);
   uint8_t data = 0;
 
-  if (mode == USE_SPI) {
-    this->CSPin = CS_pin;
-    H3LIS_SPI = SPI_port;
-  }
+  
   
   for (int i = 0x21; i < 0x25; i++) H3LIS_write(i,&data,1);
   for (int i = 0x30; i < 0x37; i++) H3LIS_write(i,&data,1);
@@ -51,6 +55,7 @@ void H3LIS::axesEnable(bool enable)
 void H3LIS::setPowerMode(power_mode pmode)
 {
   uint8_t data;
+  Serial.println("sus");
   H3LIS_read(CTRL_REG1, &data, 1);
 
   // The power mode is the high three bits of CTRL_REG1. The mode 

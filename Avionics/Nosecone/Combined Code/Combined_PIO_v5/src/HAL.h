@@ -7,14 +7,11 @@
 #include <HardwareSerial.h>
 #include <SPI.h>
 
-// #include <Wire.h>
+#include <Wire.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                            Variables                                                           //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
 
 namespace HAL { 
 
@@ -38,11 +35,7 @@ namespace HAL {
     const uint8_t GPS_RX_PIN = 16;
     const uint8_t GPS_TX_PIN = 17;
     const uint8_t GPS_I2C_PORT = 2; //This is not a pin
-
-    // Flight data
-    
-    // Adafruit_ICM20948 imu;
-    // TinyGPSPlus gps;
+    HardwareSerial gps_serial(GPS_I2C_PORT);
 
     /* ---------- Pinouts ---------- */
     // Transmitter
@@ -66,22 +59,26 @@ namespace HAL {
         pinMode(ALTIMETER1_CS, OUTPUT);
         pinMode(ALTIMETER2_CS, OUTPUT);
         pinMode(SD_CS, OUTPUT);
+        pinMode(TRANSMITTER_CS, OUTPUT);
 
         digitalWrite(IMU_CS, HIGH);
         digitalWrite(ALTIMETER1_CS, HIGH);
         digitalWrite(ALTIMETER2_CS, HIGH);
         digitalWrite(SD_CS, HIGH);
+        digitalWrite(TRANSMITTER_CS, HIGH);
     }
-    
+
     void initSensorHAL() {
-        
         sensorSPI = new SPIClass(HSPI);
         sensorSPI->begin(HSCK_PIN, HMISO_PIN, HMOSI_PIN);
-    
-        
-
     }   
-}
 
+    void initRadioHAL() {
+        
+        radioSPI = new SPIClass(VSPI);
+        radioSPI->begin(VSCK_PIN, VMISO_PIN, VMOSI_PIN);
+
+    } 
+}
 
 #endif

@@ -15,6 +15,7 @@ void setup() {
     while(!Serial);
   #endif
 
+  HAL::initCSPins();
   HAL::initSensorHAL();
   BMP::setupBMP();
   
@@ -24,9 +25,7 @@ void setup() {
 void loop() {
 
   // Code executes if BMP is being read
-  if (!BMP::readAltimeters()) {
-    DEBUGLN("Failed to read Altimeters :(");
-  }
+  BMP::readAltimeters();
 
   DEBUGLN();
   delay(100);

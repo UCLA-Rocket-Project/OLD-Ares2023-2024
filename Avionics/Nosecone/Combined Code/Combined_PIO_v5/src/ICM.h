@@ -1,3 +1,6 @@
+#ifndef ICM_H
+#define ICM_H
+
 #include "HAL.h"
 
 #include <Adafruit_ICM20X.h>
@@ -13,8 +16,7 @@ namespace ICM {
 
     void setupIMU() {
         for (int i=0; i<3000; i++) {
-            // if(imu.begin_SPI(HAL::IMU_CS, HAL::sensorSPI)) {
-            if(imu.begin_SPI(HAL::IMU_CS, HAL::HSCK_PIN, HAL::HMISO_PIN, HAL::HMOSI_PIN)) {
+            if(imu.begin_SPI(HAL::IMU_CS, HAL::sensorSPI)) {
                 DEBUGLN("found");
                 break;
             }
@@ -115,3 +117,5 @@ namespace ICM {
         DEBUGLN(" radians/s");
     }
 }
+
+#endif
