@@ -21,24 +21,18 @@ void radioGPS(void* param) {
 
     if (millis() - Radio::lastTransmissionTime > 100) {
 
-      // Radio::downlink_packet = millis();
-      // Radio::downlink_packet += "," + String(BMP::temp1, 2) + "," + String(BMP::pressure1, 2) + "," + String(BMP::altitude1, 2) + ",";
-      // // Radio::downlink_packet += String(BMP::temp2, 2) + "," + String(BMP::pressure2, 2) + "," + String(BMP::altitude2, 2) + ",";
+      Radio::downlink_packet = millis();
+      Radio::downlink_packet += "," + String(BMP::temp1, 2) + "," + String(BMP::pressure1, 2) + "," + String(BMP::altitude1, 2) + ",";
+      // Radio::downlink_packet += String(BMP::temp2, 2) + "," + String(BMP::pressure2, 2) + "," + String(BMP::altitude2, 2) + ",";
       // Radio::downlink_packet += String(ICM::accel_x, 2) + "," + String(ICM::accel_y, 2) + "," + String(ICM::accel_z, 2) + ",";
-      // // Radio::downlink_packet += String(ICM::gyro_x, 2) + "," + String(ICM::gyro_y, 2) + "," + String(ICM::gyro_z, 2) + ",";
+      // Radio::downlink_packet += String(ICM::gyro_x, 2) + "," + String(ICM::gyro_y, 2) + "," + String(ICM::gyro_z, 2) + ",";
       // Radio::downlink_packet += String(GPS::latitude, 6) + "," + String(GPS::longitude, 6) + "," + String(GPS::GPS_alt, 1) + ",";
-      // Radio::downlink_packet += String(INA::bus_voltage, 2) + "," + XTSD::logSuccess;
+      Radio::downlink_packet += String(INA::bus_voltage, 2) + "," + XTSD::logSuccess;
   
-      // Radio::lastTransmissionTime = millis();
-      // Radio::radio.beginPacket();
-      // Radio::radio.print(Radio::downlink_packet);
-      // Radio::radio.endPacket();
-      // Radio::lastTransmissionTime = millis() - Radio::lastTransmissionTime;  
-      // DEBUG("transmit with transmission time: ");
-      // DEBUGLN(Radio::lastTransmissionTime);
+      Radio::transmitPacket();
       
     }
-    // Serial.println("r");
+    Serial.println("r");
   }
 }
 
@@ -69,7 +63,7 @@ void setup() {
   HAL::initRadioHAL();
   
 
-  // Radio::setupRadio();
+  Radio::setupRadio();
   
     
   xTaskCreatePinnedToCore (

@@ -24,7 +24,7 @@ namespace Radio {
         radio = new SX1276(new Module(HAL::TRANSMITTER_CS, HAL::TRANSMITTER_D1, HAL::TRANSMITTER_RST, HAL::TRANSMITTER_D0, *HAL::radioSPI));
     
         Serial.print(F("[SX1276] Initializing ... "));
-        int state = radio->begin(915.0,500.0,12,5,RADIOLIB_SX127X_SYNC_WORD,20,6,0);
+        int state = radio->begin(917.0,500.0,12,5,RADIOLIB_SX127X_SYNC_WORD,20,6,0);
 
         #ifdef DEBUGMODE
         if (state == RADIOLIB_ERR_NONE) {
