@@ -16,7 +16,7 @@ namespace BMP {
     // double temp2, pressure2, altitude2;
 
     void setupBMP() {
-        for (int i=0; i<3000; i++) {
+        for (int i=0; i<300; i++) {
             if(bmp1.begin_SPI(HAL::ALTIMETER1_CS, HAL::sensorSPI))
                 break;    
             DEBUGLN("Failed to find BMP 1");

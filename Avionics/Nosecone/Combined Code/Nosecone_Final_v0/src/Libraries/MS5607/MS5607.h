@@ -25,7 +25,7 @@ class MS5607
     float getAltitude(void);
 
   private:
-    const float P0 = 1013.25;
+    const float P0 = 1004.14;
     short MS5607_ADDR = 0X77;      // default device address of MS5607 (CBS == HIGH)
     short OSR = 4096;              // default over sampling ratio
     short CONV_D1 = 0x48;          // corresponding temp conv. command for OSR

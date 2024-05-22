@@ -16,12 +16,16 @@
   This example code is in the public domain.
 
 */
-#include <SPI.h>
-#include <SD.h>
+
 #include "Globals.h"
 #include "HAL.h"
 
-File root;
+#include "SD_functions.h"
+#include <iostream>
+#include <sstream>
+File rootDir;
+
+#define INPUT_LENGTH 40
 
 /* Functions
 
@@ -37,7 +41,6 @@ mkdir - make directory at current path
 
 */
 
-void printDirectory(File, int);
 
 void setup() {
   // Open serial communications and wait for port to open:
@@ -56,73 +59,106 @@ void setup() {
   }
   Serial.println("initialization done.");
 
-  root = SD.open("/");
+  rootDir = SD.open("/");
 
   // printDirectory(root, 0);
 
   // const char* dir_to_add = "/sup";
-  // if (!SD.exists(dir_to_add)) {
-  //   Serial.println("no directory");
-  //   SD.mkdir(dir_to_add);
-  // }
 
-  printDirectory(root, 0);
+
+  filetree(rootDir, 0);
 
   Serial.println("done!");
 }
 
 void loop() {
 
+  rootDir = SD.open(root);
 
   if (Serial.available() > 0) {
     // read the incoming byte:
-    String fileName;
-    fileName = Serial.readString();
+    String input;
+    String arg;
 
-    File dataFile = SD.open(fileName);
+    input = Serial.readStringUntil(' ');
+    arg = Serial.readString();
+    // Serial.print(input);
+    // Serial.println(input == "ls");
 
-    // if the file is available, write to it:
-    if (dataFile) {
-      while (dataFile.available()) {
-        Serial.write(dataFile.read());
-      }
-      dataFile.close();
+    if (input == "ls") {
+      if (arg == ".")
+        ls(root);
+      else
+        ls(root + "/" + arg);
     }
-    // if the file isn't open, pop up an error:
-    else {
-      Serial.println("error opening file");
+
+    if (input == "cd") {
+      cd(root,arg);
     }
-    Serial.println("Done!");
-    root = SD.open("/");
-    printDirectory(root, 0);
+
+    if (input == "rm") {
+      rm(arg);
+    }
+
+    if (input == "tree") {
+      filetree(rootDir, 0);
+    }
+
+    if (input == "nano") {
+      nano(arg);
+    }
+    
+
+    // if (input == "ls") {
+    //   Serial.print(input);
+    // }
+
+
+
+
+
+
+
+    // std::string cmd;
+    // std::string fileName;
+    // std::stringstream input;
+
+
+    // input << Serial.readString().c_str();
+    // input >> cmd >> fileName;
+
+    // // Serial.println(Serial.readString());
+    // Serial.print(cmd.c_str());
+    // Serial.print(" ");
+    // Serial.println(fileName.c_str());
+
+    // File dataFile = SD.open(cmd.c_str());
+
+    // // if the file is available, write to it:
+    // if (dataFile) {
+    //   // while (dataFile.available()) {
+    //   //   Serial.write(dataFile.read());
+    //   // }
+    //   // dataFile.close();
+    //   while (1) {
+    //     SD.remove(path);
+    //     break;
+    //   }
+    //   dataFile.close();
+    // }
+    // // if the file isn't open, pop up an error:
+    // else {
+    //   Serial.println("error opening file");
+    // }
+    // Serial.println("Done!");
+    // root = SD.open("/");
+    // printDirectory(root, 0);
   }
 
   
 
 }
 
-void printDirectory(File dir, int numTabs) {
-  while (true) {
 
-    File entry =  dir.openNextFile();
-    if (! entry) {
-      // no more files
-      break;
-    }
-    for (uint8_t i = 0; i < numTabs; i++) {
-      Serial.print('\t');
-    }
-    Serial.print(entry.name());
-    if (entry.isDirectory()) {
-      Serial.println("/");
-      printDirectory(entry, numTabs + 1);
-    } else {
-      // files have sizes, directories do not
-      Serial.print("\t\t");
-      Serial.println(entry.size(), DEC);
-    }
-    entry.close();
-  }
-}
 
 

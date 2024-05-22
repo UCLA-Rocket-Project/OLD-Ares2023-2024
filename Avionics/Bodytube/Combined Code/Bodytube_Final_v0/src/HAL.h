@@ -55,8 +55,8 @@ namespace HAL {
 
     // ADS
     const uint8_t ADS_CS = 33;
-    const uint8_t ADS_INT = 39;
-
+    const uint8_t ADS_DRDY = 39;
+    
     // SD/Flash
     const uint8_t SD_CS = 32;
 

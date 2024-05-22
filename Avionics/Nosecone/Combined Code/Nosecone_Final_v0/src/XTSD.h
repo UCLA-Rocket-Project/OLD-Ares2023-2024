@@ -8,7 +8,7 @@
 namespace XTSD {
     
     File dataFile;
-    const char* fileName = "/postTR2_1.txt";
+    const char* fileName = "/FINAL_ROCKET_nosecone.txt";
 
     String logStr = "";
 

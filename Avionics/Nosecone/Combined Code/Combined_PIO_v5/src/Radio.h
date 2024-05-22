@@ -38,6 +38,6 @@ namespace Radio {
         lastTransmissionTime = millis() - oldTime;  
         DEBUGLN("transmit");
         // DEBUGLN();
-        delay(100);
+        // delay(100);
     }
 }

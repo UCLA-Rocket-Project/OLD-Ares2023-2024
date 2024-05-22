@@ -12,9 +12,7 @@ namespace MS {
     MS5607 ms5607;
     
     uint32_t start, stop;
-
-    #define SEALEVELPRESSURE_HPA 1016.30 // Sea level pressure of LA 
-
+    
     float temp, pressure, altitude;
 
     const float R = 287.052; // specific gas constant R*/M0
